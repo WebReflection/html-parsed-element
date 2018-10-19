@@ -10,12 +10,14 @@ const HTMLParsedElement = (() => {
     return false;
   };
   const cleanUp = (el, observer, ownerDocument, onDCL) => {
-    init.set(el, true);
     observer.disconnect();
     ownerDocument.removeEventListener(DCL, onDCL);
     parsedCallback(el);
   };
-  const parsedCallback = el => el.parsedCallback();
+  const parsedCallback = el => {
+    init.set(el, true);
+    el.parsedCallback();
+  };
   return class HTMLParsedElement extends HTMLElement {
     connectedCallback() {
       if ('parsedCallback' in this && !init.has(this)) {
@@ -28,6 +30,7 @@ const HTMLParsedElement = (() => {
           const onDCL = () => cleanUp(self, observer, ownerDocument, onDCL);
           ownerDocument.addEventListener(DCL, onDCL);
           const observer = new MutationObserver(() => {
+            /* istanbul ignore else */
             if (isParsed(self)) {
               cleanUp(self, observer, ownerDocument, onDCL);
               return true;

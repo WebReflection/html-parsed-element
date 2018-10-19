@@ -6,14 +6,14 @@
   "module": "esm/index.js",
   "unpkg": "min.js",
   "scripts": {
-    "build": "npm run cjs && npm run esm && npm run min && npm run size",
+    "build": "npm run cjs && npm run esm && npm run min && npm run test && npm run size",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "cjs": "cp index.js cjs && echo 'module.exports = HTMLParsedElement;' >> cjs/index.js",
     "esm": "cp index.js esm && echo 'export default HTMLParsedElement;' >> esm/index.js",
     "min": "uglifyjs index.js --comments=/^!/ -c -m -o min.js",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c && rm -f min.js.br",
     "instrument": "istanbul instrument ./index.js -o ./test/html-parsed-element.js",
-    "test": "npm run instrument && npm run server & sleep 1 && npm run nightmare && npm run report",
+    "test": "npm run instrument && npm run server & sleep 1 && npm run nightmare && npm run report && killall node",
     "nightmare": "node test || (killall node && exit 1)",
     "report": "istanbul report --include=test/coverage.json text-summary html",
     "server": "http-server test -s"
