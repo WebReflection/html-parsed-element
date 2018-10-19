@@ -1,0 +1,44 @@
+{
+  "name": "html-parsed-element",
+  "version": "0.0.0",
+  "description": "A base custom element class with a reliable `parsedCallback` method",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "unpkg": "min.js",
+  "scripts": {
+    "build": "npm run cjs && npm run esm && npm run min && npm run size",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "cjs": "cp index.js cjs && echo 'module.exports = HTMLParsedElement;' >> cjs/index.js",
+    "esm": "cp index.js esm && echo 'export default HTMLParsedElement;' >> esm/index.js",
+    "min": "uglifyjs index.js --comments=/^!/ -c -m -o min.js",
+    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c && rm -f min.js.br",
+    "instrument": "istanbul instrument ./index.js -o ./test/html-parsed-element.js",
+    "test": "npm run instrument && npm run server & sleep 1 && npm run nightmare && npm run report",
+    "nightmare": "node test || (killall node && exit 1)",
+    "report": "istanbul report --include=test/coverage.json text-summary html",
+    "server": "http-server test -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/html-parsed-element.git"
+  },
+  "keywords": [
+    "web",
+    "components",
+    "custom",
+    "elements"
+  ],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebReflection/html-parsed-element/issues"
+  },
+  "homepage": "https://github.com/WebReflection/html-parsed-element#readme",
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "http-server": "^0.11.1",
+    "istanbul": "^0.4.5",
+    "nightmare": "^3.0.1",
+    "uglify-es": "^3.3.9"
+  }
+}

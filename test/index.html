@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <script src="html-parsed-element.js"></script>
+    <script>
+    customElements.define(
+      'early-definition',
+      class extends HTMLParsedElement {
+        parsedCallback() {}
+      }
+    );
+    customElements.define(
+      'not-parsed',
+      class extends HTMLParsedElement {}
+    );
+    </script>
+  </head>
+  <body><not-parsed></not-parsed><early-definition></early-definition><lazy-definition></lazy-definition><div><early-definition></early-definition></div><script>
+  customElements.define(
+    'lazy-definition',
+    class extends HTMLParsedElement {
+      parsedCallback() {
+        alert(this.parsed);
+      }
+    }
+  );
+  </script></body></html>
