@@ -15,7 +15,7 @@
     "instrument": "istanbul instrument ./index.js -o ./test/html-parsed-element.js",
     "test": "npm run server & (sleep 1 && npm run nightmare && npm run report && npm run kill)",
     "nightmare": "node test || (npm run kill && exit 1)",
-    "report": "istanbul report --include=test/coverage.json text-summary html",
+    "report": "istanbul report --include=test/coverage.json text-summary lcov",
     "server": "node -e 'require(`fs`).writeFileSync(`pid`,require(`child_process`).spawn(`http-server`,[`test`,`-s`]).pid);'",
     "kill": "kill -9 $(cat pid) && rm -f pid"
   },
