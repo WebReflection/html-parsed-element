@@ -13,10 +13,11 @@
     "min": "uglifyjs index.js --comments=/^!/ -c -m -o min.js",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c && rm -f min.js.br",
     "instrument": "istanbul instrument ./index.js -o ./test/html-parsed-element.js",
-    "test": "npm run instrument && npm run server & sleep 1 && npm run nightmare && npm run report && killall node",
-    "nightmare": "node test || (killall node && exit 1)",
+    "test": "npm run instrument && npm run server & sleep 1 && npm run nightmare && npm run report && npm run killall",
+    "nightmare": "node test || (npm run killall && exit 1)",
     "report": "istanbul report --include=test/coverage.json text-summary html",
-    "server": "http-server test -s"
+    "server": "node -e 'process.title = `html-parsed-element`;require(`child_process`).execSync(`http-server test -s`);'",
+    "killall": "killall -SIGINT html-parsed-element"
   },
   "repository": {
     "type": "git",
