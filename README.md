@@ -6,6 +6,8 @@ A base custom element class with a reliable `parsedCallback` method and a `parse
 
 Class born [after discussing why `connectedCallback` is considered harmful](https://github.com/w3c/webcomponents/issues/551#issuecomment-429262811) and how to properly setup any custom element.
 
+Based off the [contributions](https://github.com/w3c/webcomponents/issues/551#issuecomment-431258689) by [@franktopel](https://github.com/franktopel) and [@irhadkul](https://github.com/irhadkul).
+
 ```js
 customElements.define(
   'custom-element',
