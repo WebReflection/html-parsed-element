@@ -53,7 +53,12 @@ const HTMLParsedElement = (() => {
             }
           },
           get [name]() {
-            return init.has(this) ? (init.get(this) === true) : isParsed(this);
+            const value = init.has(this) ?
+              (init.get(this) === true) :
+              isParsed(this);
+            if (value)
+              Object.defineProperty(this, name, {value});
+            return value;
           }
         }
       );
