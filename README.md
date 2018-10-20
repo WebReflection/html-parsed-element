@@ -1,6 +1,6 @@
 # html-parsed-element
 
-[![Build Status](https://travis-ci.com/WebReflection/html-parsed-element.svg?branch=master)](https://travis-ci.com/WebReflection/html-parsed-element) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/html-parsed-element/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/html-parsed-element?branch=master)
+[![Build Status](https://travis-ci.com/WebReflection/html-parsed-element.svg?branch=master)](https://travis-ci.com/WebReflection/html-parsed-element) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/html-parsed-element/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/html-parsed-element?branch=master) ![WebReflection status](https://offline.report/status/webreflection.svg)
 
 A base custom element class with a reliable `parsedCallback` method and a `parsed` getter.
 
