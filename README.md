@@ -39,4 +39,4 @@ const HTMLParsedElement = require('html-parsed-element');
 const HTMLParsedElement = require('html-parsed-element/cjs');
 ```
 
-As of now, html-parsed-element is written and will be returned for `import` and `require()` in ES2015 (formerly known as createNewButton"ES6"), so make sure your build process properly transpiles it if you need to support less capable browsers.
+As of now, html-parsed-element is written and will be returned for `import` and `require()` in ES2015 (formerly known as "ES6"), so make sure your build process properly transpiles it if you need to support less capable browsers.
