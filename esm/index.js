@@ -9,20 +9,20 @@ const HTMLParsedElement = (() => {
     } while (el = el.parentNode);
     return false;
   };
-  const cleanUp = (el, observer, ownerDocument, onDCL) => {
-    observer.disconnect();
-    ownerDocument.removeEventListener(DCL, onDCL);
-    parsedCallback(el);
-  };
-  const parsedCallback = el => {
-    init.set(el, true);
-    el.parsedCallback();
-  };
   class HTMLParsedElement extends HTMLElement {
     static withParsedCallback(Class, name) {
       const {prototype} = Class;
       const {connectedCallback} = prototype;
       const method = (name || 'parsed') + 'Callback';
+      const cleanUp = (el, observer, ownerDocument, onDCL) => {
+        observer.disconnect();
+        ownerDocument.removeEventListener(DCL, onDCL);
+        parsedCallback(el);
+      };
+      const parsedCallback = el => {
+        init.set(el, true);
+        el[method]();
+      };
       Object.defineProperties(
         prototype,
         {
@@ -52,13 +52,16 @@ const HTMLParsedElement = (() => {
               }
             }
           },
-          get [name]() {
-            const value = init.has(this) ?
-              (init.get(this) === true) :
-              isParsed(this);
-            if (value)
-              Object.defineProperty(this, name, {value});
-            return value;
+          [name]: {
+            configurable: true,
+            get() {
+              const value = init.has(this) ?
+                (init.get(this) === true) :
+                isParsed(this);
+              if (value)
+                Object.defineProperty(this, name, {value});
+              return value;
+            }
           }
         }
       );
