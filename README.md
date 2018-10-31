@@ -19,3 +19,24 @@ customElements.define(
   }
 );
 ```
+
+## How to install:
+
+```js
+// esm with a good bundler
+import HTMLParsedElement from 'html-parsed-element';
+
+// esm with a less good bundler
+import HTMLParsedElement from 'html-parsed-element/esm';
+
+// esm via CDN (or you can use a relative/absolute path)
+import HTMLParsedElement from 'https://unpkg.com/html-parsed-element/esm/index.js';
+
+// cjs
+const HTMLParsedElement = require('html-parsed-element');
+
+// bad cjs bundler
+const HTMLParsedElement = require('html-parsed-element/cjs');
+```
+
+As of now, html-parsed-element is written and will be returned for `import` and `require()` in ES2018, so make sure your build process properly transpiles it if you need to support less capable browsers.
