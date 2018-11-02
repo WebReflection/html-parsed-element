@@ -10,10 +10,10 @@ const HTMLParsedElement = (() => {
     return false;
   };
   class HTMLParsedElement extends HTMLElement {
-    static withParsedCallback(Class, name) {
+    static withParsedCallback(Class, name = 'parsed') {
       const {prototype} = Class;
       const {connectedCallback} = prototype;
-      const method = (name || 'parsed') + 'Callback';
+      const method = name + 'Callback';
       const cleanUp = (el, observer, ownerDocument, onDCL) => {
         observer.disconnect();
         ownerDocument.removeEventListener(DCL, onDCL);
@@ -42,24 +42,22 @@ const HTMLParsedElement = (() => {
                   ownerDocument.addEventListener(DCL, onDCL);
                   const observer = new MutationObserver(() => {
                     /* istanbul ignore else */
-                    if (isParsed(self)) {
+                    if (isParsed(self))
                       cleanUp(self, observer, ownerDocument, onDCL);
-                      return true;
-                    }
                   });
                   observer.observe(self.parentNode, {childList: true, subtree: true});
                 }
               }
             }
           },
-          [name || 'parsed']: {
+          [name]: {
             configurable: true,
             get() {
               const value = init.has(this) ?
                 (init.get(this) === true) :
                 isParsed(this);
               if (value)
-                Object.defineProperty(this, name || 'parsed', {value});
+                Object.defineProperty(this, name, {value});
               return value;
             }
           }
