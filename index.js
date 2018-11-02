@@ -52,7 +52,7 @@ const HTMLParsedElement = (() => {
               }
             }
           },
-          [name]: {
+          [name || 'parsed']: {
             configurable: true,
             get() {
               const value = init.has(this) ?
