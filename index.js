@@ -59,7 +59,7 @@ const HTMLParsedElement = (() => {
                 (init.get(this) === true) :
                 isParsed(this);
               if (value)
-                Object.defineProperty(this, name, {value});
+                Object.defineProperty(this, name || 'parsed', {value});
               return value;
             }
           }
