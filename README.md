@@ -4,6 +4,8 @@
 
 A base custom element class with a reliable `parsedCallback` method and a `parsed` getter.
 
+It can be used as base class to extend or through its public static `withParsedCallback(Class, name = 'parsed'):Class` method;
+
 Class born [after discussing why `connectedCallback` is considered harmful](https://github.com/w3c/webcomponents/issues/551#issuecomment-429262811) and how to properly setup any custom element.
 
 Based off the [contributions](https://github.com/w3c/webcomponents/issues/551#issuecomment-431258689) by [@franktopel](https://github.com/franktopel) and [@irhadkul](https://github.com/irhadkul).
@@ -17,6 +19,18 @@ customElements.define(
       console.log(this.parsed); // always true here
     }
   }
+);
+
+// or ...
+const {withParsedCallback} = HTMLParsedElement;
+customElements.define(
+  'other-element',
+  withParsedCallback(class extends HTMLElement {
+    parsedCallback() {
+      this.innerHTML = 'always <strong>safe</strong>!';
+      console.log(this.parsed); // always true here
+    }
+  })
 );
 ```
 
