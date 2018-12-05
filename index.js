@@ -2,6 +2,7 @@
 const HTMLParsedElement = (() => {
   const DCL = 'DOMContentLoaded';
   const init = new WeakMap;
+  const queue = [];
   const isParsed = el => {
     do {
       if (el.nextSibling)
@@ -9,6 +10,15 @@ const HTMLParsedElement = (() => {
     } while (el = el.parentNode);
     return false;
   };
+  const upgrade = () => {
+    queue.splice(0).forEach(info => {
+      if (init.get(info[0]) !== true) {
+        init.set(info[0], true);
+        info[0][info[1]]();
+      }
+    });
+  };
+  document.addEventListener(DCL, upgrade);
   class HTMLParsedElement extends HTMLElement {
     static withParsedCallback(Class, name = 'parsed') {
       const {prototype} = Class;
@@ -20,8 +30,9 @@ const HTMLParsedElement = (() => {
         parsedCallback(el);
       };
       const parsedCallback = el => {
-        init.set(el, true);
-        el[method]();
+        if (!queue.length)
+          requestAnimationFrame(upgrade);
+        queue.push([el, method]);
       };
       Object.defineProperties(
         prototype,
@@ -36,7 +47,7 @@ const HTMLParsedElement = (() => {
                 const {ownerDocument} = self;
                 init.set(self, false);
                 if (ownerDocument.readyState === 'complete' || isParsed(self))
-                  Promise.resolve(self).then(parsedCallback);
+                  parsedCallback(self);
                 else {
                   const onDCL = () => cleanUp(self, observer, ownerDocument, onDCL);
                   ownerDocument.addEventListener(DCL, onDCL);
@@ -53,12 +64,7 @@ const HTMLParsedElement = (() => {
           [name]: {
             configurable: true,
             get() {
-              const value = init.has(this) ?
-                (init.get(this) === true) :
-                isParsed(this);
-              if (value)
-                Object.defineProperty(this, name, {value});
-              return value;
+              return init.get(this) === true;
             }
           }
         }
