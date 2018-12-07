@@ -12,10 +12,13 @@ const HTMLParsedElement = (() => {
   };
   const upgrade = () => {
     queue.splice(0).forEach(info => {
-      init.set(info[0], true);
-      info[0][info[1]]();
+      if (init.get(info[0]) !== true) {
+        init.set(info[0], true);
+        info[0][info[1]]();
+      }
     });
   };
+  document.addEventListener(DCL, upgrade);
   class HTMLParsedElement extends HTMLElement {
     static withParsedCallback(Class, name = 'parsed') {
       const {prototype} = Class;
