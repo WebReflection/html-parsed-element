@@ -1,6 +1,6 @@
 {
   "name": "html-parsed-element",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A base custom element class with a reliable `parsedCallback` method",
   "main": "cjs/index.js",
   "module": "esm/index.js",
