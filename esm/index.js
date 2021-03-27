@@ -39,6 +39,7 @@ const HTMLParsedElement = (() => {
         {
           connectedCallback: {
             configurable: true,
+            writable: true,
             value() {
               if (connectedCallback)
                 connectedCallback.apply(this, arguments);

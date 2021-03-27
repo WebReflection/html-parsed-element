@@ -17,7 +17,7 @@
     "test": "npm run server & (sleep 1 && npm run nightmare && npm run report && npm run kill)",
     "nightmare": "node test || (npm run kill && exit 1)",
     "report": "istanbul report --include=test/coverage.json text-summary",
-    "server": "node -e 'require(`fs`).writeFileSync(`pid`,require(`child_process`).spawn(`http-server`,[`test`,`-s`]).pid);'",
+    "server": "node -e 'require(`fs`).writeFileSync(`pid`,require(`child_process`).spawn(`http-server`,[`test`,`-s`]).pid.toString());'",
     "kill": "kill -9 $(cat pid) && rm -f pid"
   },
   "repository": {
